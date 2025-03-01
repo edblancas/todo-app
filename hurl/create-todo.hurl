@@ -4,8 +4,8 @@ POST http://localhost:8080/api/todos
 Content-Type: application/json
 
 {
+    "id": "{{todo_id}}",
     "title": "Buy groceries",
-    "description": "Milk, eggs, bread, and vegetables",
     "completed": false
 }
 
@@ -13,7 +13,6 @@ HTTP/1.1 201
 [Asserts]
 jsonpath "$.id" exists
 jsonpath "$.title" == "Buy groceries"
-jsonpath "$.description" == "Milk, eggs, bread, and vegetables"
 jsonpath "$.completed" == false
 jsonpath "$.createdAt" exists
 jsonpath "$.updatedAt" exists

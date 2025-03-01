@@ -7,6 +7,5 @@ HTTP/1.1 200
 [Asserts]
 jsonpath "$.id" == {{todo_id}}
 jsonpath "$.title" exists
-jsonpath "$.description" exists
 jsonpath "$.completed" exists
 

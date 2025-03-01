@@ -2,11 +2,11 @@ package com.example.todoapp.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Todo {
-    private Long id;
+    private UUID id;
     private String title;
-    private String description;
     private boolean completed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -16,21 +16,20 @@ public class Todo {
     }
 
     // All-args constructor
-    public Todo(Long id, String title, String description, boolean completed, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Todo(UUID id, String title, boolean completed, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
-        this.description = description;
         this.completed = completed;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
     // Getters and Setters
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -40,14 +39,6 @@ public class Todo {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public boolean isCompleted() {
@@ -83,14 +74,13 @@ public class Todo {
         return completed == todo.completed &&
                 Objects.equals(id, todo.id) &&
                 Objects.equals(title, todo.title) &&
-                Objects.equals(description, todo.description) &&
                 Objects.equals(createdAt, todo.createdAt) &&
                 Objects.equals(updatedAt, todo.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, completed, createdAt, updatedAt);
+        return Objects.hash(id, title, completed, createdAt, updatedAt);
     }
 
     // toString
@@ -99,7 +89,6 @@ public class Todo {
         return "Todo{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
                 ", completed=" + completed +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +

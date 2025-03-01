@@ -6,7 +6,6 @@ Content-Type: application/json
 
 {
     "title": "Buy groceries - UPDATED",
-    "description": "Milk, eggs, bread, vegetables, and fruits",
     "completed": true
 }
 
@@ -14,6 +13,5 @@ HTTP/1.1 200
 [Asserts]
 jsonpath "$.id" == {{todo_id}}
 jsonpath "$.title" == "Buy groceries - UPDATED"
-jsonpath "$.description" == "Milk, eggs, bread, vegetables, and fruits"
 jsonpath "$.completed" == true
 jsonpath "$.updatedAt" exists

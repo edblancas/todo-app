@@ -7,40 +7,39 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.UUID;
 
 @Repository
 public class TodoRepository {
     private final List<Todo> todos = new ArrayList<>();
-    private final AtomicLong idCounter = new AtomicLong(1);
 
     public List<Todo> findAll() {
         return new ArrayList<>(todos);
     }
 
-    public Optional<Todo> findById(Long id) {
+    public Optional<Todo> findById(UUID id) {
         return todos.stream()
                 .filter(todo -> todo.getId().equals(id))
                 .findFirst();
     }
 
     public Todo save(Todo todo) {
-        if (todo.getId() == null) {
-            // Creating a new todo
-            todo.setId(idCounter.getAndIncrement());
-            todo.setCreatedAt(LocalDateTime.now());
-            todo.setUpdatedAt(LocalDateTime.now());
-            todos.add(todo);
-        } else {
-            // Updating an existing todo
-            todos.removeIf(t -> t.getId().equals(todo.getId()));
-            todo.setUpdatedAt(LocalDateTime.now());
-            todos.add(todo);
-        }
+        // Creating a new todo
+        todo.setCreatedAt(LocalDateTime.now());
+        todo.setUpdatedAt(LocalDateTime.now());
+        todos.add(todo);
         return todo;
     }
 
-    public boolean deleteById(Long id) {
+    public Todo update(Todo todo) {
+        // Updating an existing todo
+        todos.removeIf(t -> t.getId().equals(todo.getId()));
+        todo.setUpdatedAt(LocalDateTime.now());
+        todos.add(todo);
+        return todo;
+    }
+
+    public boolean deleteById(UUID id) {
         return todos.removeIf(todo -> todo.getId().equals(id));
     }
 }

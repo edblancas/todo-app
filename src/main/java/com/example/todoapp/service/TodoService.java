@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TodoService {
@@ -22,33 +23,34 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
-    public Optional<Todo> getTodoById(Long id) {
-        return todoRepository.findById(id);
+    public Optional<Todo> getTodoById(String id) {
+        return todoRepository.findById(UUID.fromString(id));
     }
 
     public Todo createTodo(TodoRequest todoRequest) {
         Todo todo = new Todo();
         todo.setTitle(todoRequest.getTitle());
-        todo.setDescription(todoRequest.getDescription());
         todo.setCompleted(todoRequest.isCompleted());
+        todo.setId(UUID.fromString(todoRequest.getId()));
         return todoRepository.save(todo);
     }
 
-    public Optional<Todo> updateTodo(Long id, TodoRequest todoRequest) {
-        Optional<Todo> existingTodo = todoRepository.findById(id);
+    public Optional<Todo> updateTodo(String id, TodoRequest todoRequest) {
+        Optional<Todo> existingTodo = todoRepository.findById(UUID.fromString(id));
         
         if (existingTodo.isPresent()) {
             Todo todo = existingTodo.get();
-            todo.setTitle(todoRequest.getTitle());
-            todo.setDescription(todoRequest.getDescription());
+            var title = todoRequest.getTitle();
+            if (title != null)
+                todo.setTitle(title);
             todo.setCompleted(todoRequest.isCompleted());
-            return Optional.of(todoRepository.save(todo));
+            return Optional.of(todoRepository.update(todo));
         }
         
         return Optional.empty();
     }
 
-    public boolean deleteTodo(Long id) {
-        return todoRepository.deleteById(id);
+    public boolean deleteTodo(String id) {
+        return todoRepository.deleteById(UUID.fromString(id));
     }
 }
